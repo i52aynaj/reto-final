@@ -1,11 +1,26 @@
-<h3>Ofertas:</h3>
+<!-- <h3>Ofertas:</h3>
 <ul id=listOfertas>
   <li *ngFor="let oferta of ofertas; let i = index;">
         {{oferta.title}} {{oferta.description}}
         <span class="glyphicon glyphicon-remove" (click)="delete($event, oferta.id)"></span>
   </li>
   
-  <!--<a (click)="onSelect(owner)">
+  <a (click)="onSelect(owner)">
     {{owner.firstName}} {{owner.lastName}}
-    </a>-->
-</ul>
+    </a>
+</ul> -->
+
+<div class="row">
+  <div *ngFor="let oferta of ofertas; let i = index;" class="col-md-4 col-sm-4 col-xs-6 div_oferta">
+     <div class="papelera" (click)="delete($event, oferta.id);"><img src="../../../assets/images/delete.png" class="img_papelera"></div>
+     <div class="descuento rotar">{{oferta.discount}} %</div>  
+     <div class="titulo_oferta">
+        <h3>{{oferta.title}}</h3>
+     </div>
+     <p class="desc">{{oferta.description}}</p>
+     <p class="small">Esta oferta expira el {{ oferta.expireDate | date: short  }}</p>    
+  </div>
+  <div class="clearfix"></div>
+</div>
+
+<app-form-ofertas></app-form-ofertas>
