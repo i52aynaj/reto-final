@@ -22,7 +22,7 @@ export class ListOfertasComponent implements OnInit {
   ngOnInit() {
     this.ofertasService.getOfertas().subscribe(console.log);
 
-    // this.ofertasService.saveOferta(this.ofertaTest).subscribe(result => console.log(result));
+    this.ofertasService.saveOferta(this.ofertaTest).subscribe(result => console.log(result));
 
     // this.ofertasService.updateOferta(this.ofertaTest).subscribe(console.log);
     
