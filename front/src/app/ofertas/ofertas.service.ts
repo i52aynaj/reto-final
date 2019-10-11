@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { of, Observable } from "rxjs";
 import { Oferta } from "./ofertas";
+import {catchError} from 'rxjs/operators';
+import {HttpErrorHandler, HandleError} from '../error.service';
 import { HttpResponse } from "selenium-webdriver/http";
 
 
@@ -10,9 +12,14 @@ import { HttpResponse } from "selenium-webdriver/http";
 })
 export class OfertasService {
 
-    url: string = "http://192.168.1.50:8080";
+    //entity_url = environment.REST_API_URL + 'owners';
 
-    constructor(private httpClient: HttpClient) {
+  private handlerError: HandleError;
+  url: string = "http://192.168.1.50:8080";
+
+    constructor(private httpClient: HttpClient, private httpErrorHandler: HttpErrorHandler) {
+        this.handlerError = httpErrorHandler.createHandleError('OfertasService');
+
 
     }
 
@@ -31,6 +38,5 @@ export class OfertasService {
     deleteOferta(id: number): Observable<HttpResponse> {
         return this.httpClient.delete<HttpResponse>(this.url + "/ofertas/" + id);
     }
-
 
 }

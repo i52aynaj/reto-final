@@ -9,6 +9,8 @@ import { Oferta } from '../ofertas';
 })
 export class ListOfertasComponent implements OnInit {
 
+  private ofertas: Array<Oferta>;
+
   ofertaTest: Oferta = {
     title: 'Oferta prueba',
     description: 'Oferta prueba descripción',
@@ -17,17 +19,20 @@ export class ListOfertasComponent implements OnInit {
     id: 5
   }
 
+
   constructor(private ofertasService: OfertasService) { }
 
   ngOnInit() {
-    this.ofertasService.getOfertas().subscribe(console.log);
 
-    this.ofertasService.saveOferta(this.ofertaTest).subscribe(result => console.log(result));
+    this.ofertasService.getOfertas().subscribe(
+      data => this.ofertas = data
+      );
+  }
 
-    // this.ofertasService.updateOferta(this.ofertaTest).subscribe(console.log);
-    
-    // this.ofertasService.deleteOferta(this.ofertaTest.id).subscribe(console.log);
-
+  delete(id: string){
+    this.ofertasService.deleteOferta(id).subscribe(
+      
+    );
   }
 
 }
