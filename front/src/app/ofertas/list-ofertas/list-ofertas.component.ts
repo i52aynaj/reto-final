@@ -11,6 +11,15 @@ export class ListOfertasComponent implements OnInit {
 
   private ofertas: Array<Oferta>;
 
+  ofertaTest: Oferta = {
+    title: 'Oferta prueba',
+    description: 'Oferta prueba descripción',
+    discount: 50,
+    expireDate: new Date(),
+    id: 5
+  }
+
+
   constructor(private ofertasService: OfertasService) { }
 
   ngOnInit() {
@@ -25,4 +34,5 @@ export class ListOfertasComponent implements OnInit {
       
     );
   }
+
 }

@@ -4,6 +4,7 @@ import { of, Observable } from "rxjs";
 import { Oferta } from "./ofertas";
 import {catchError} from 'rxjs/operators';
 import {HttpErrorHandler, HandleError} from '../error.service';
+import { HttpResponse } from "selenium-webdriver/http";
 
 
 @Injectable({
@@ -14,34 +15,28 @@ export class OfertasService {
     //entity_url = environment.REST_API_URL + 'owners';
 
   private handlerError: HandleError;
+  url: string = "http://192.168.1.50:8080";
 
     constructor(private httpClient: HttpClient, private httpErrorHandler: HttpErrorHandler) {
         this.handlerError = httpErrorHandler.createHandleError('OfertasService');
 
+
     }
 
     getOfertas(): Observable<Oferta[]> {
-        return of<Oferta[]>([{
-            id: 1,
-            title: 'Oferta 2x1',
-            description: 'Paga 1',
-            discount: 50,
-            expireDate: new Date()
-        }]);
+        return this.httpClient.get<Oferta[]>(this.url + "/ofertas");
     }
 
-    addOferta(oferta: Oferta): Observable<Oferta> {
-        return this.httpClient.post<Oferta>('servidor', oferta)
-      .pipe(
-        catchError(this.handlerError('addOferta', oferta))
-      );
+    saveOferta(oferta: Oferta): Observable<any> {
+        return this.httpClient.post(this.url + "/ofertas", oferta);
     }
 
-    deleteOferta(oferta_id: string): Observable<{}> {
-        return this.httpClient.delete<Oferta>('servidor' + '/' + oferta_id)
-          .pipe(
-             catchError(this.handlerError('deleteOwner', [oferta_id]))
-          );
-      }
+    updateOferta(oferta: Oferta): Observable<HttpResponse> {
+        return this.httpClient.put<HttpResponse>(this.url + "/ofertas/ " + oferta.id, oferta);
+    }
+
+    deleteOferta(id: number): Observable<HttpResponse> {
+        return this.httpClient.delete<HttpResponse>(this.url + "/ofertas/" + id);
+    }
 
 }

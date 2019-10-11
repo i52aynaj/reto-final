@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+
 import { FormOfertasComponent } from './form-ofertas/form-ofertas.component';
 import { ListOfertasComponent } from './list-ofertas/list-ofertas.component';
 import { FormsModule } from '@angular/forms';
+
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpMockRequestInterceptor } from './http-mock-request-interceptor.service';
+
 
 @NgModule({
   imports: [
@@ -11,6 +15,11 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule
   ],
+  providers:[{
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpMockRequestInterceptor,
+    multi: true
+  }],
   declarations: [
     FormOfertasComponent,
     ListOfertasComponent
@@ -19,6 +28,5 @@ import { FormsModule } from '@angular/forms';
     FormOfertasComponent,
     ListOfertasComponent
   ]
-
 })
 export class OfertasModule { }
